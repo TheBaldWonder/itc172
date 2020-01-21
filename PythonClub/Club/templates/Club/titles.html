@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Meeting Titles</h1>
+<table class='table'>
+    <tr>
+        <th>Names</th>
+        <th>Description</th>
+    </tr>
+{% for t in title_list %}
+<tr>
+    <td>{{% t.titlename %}}</td>
+    <td>{{% t.titledescription %}}</td>
+</tr>
+{% endfor %}
+
+</table>
+{% endblock %} 

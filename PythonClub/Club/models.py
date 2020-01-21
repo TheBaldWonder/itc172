@@ -11,22 +11,21 @@ class Meeting(models.Model):
     agenda=models.TextField()
 
     def __str__(self):
-        return self.meetingID
         return self.meetingtitle
 
         class Meta:
             db_table='meeting'
+            verbose_name_plural='meetings'
 
 class MeetingMinutes(models.Model):
     attendance=models.ManyToManyField(User)
     minutes=models.TextField()
 
     def __str__(self):
-        return self.meetingID
-        return self.meetingminutes
+        return self.attendance
 
     class Meta:
-        db_table='meetingminutes'
+        db_table='attendance'
 
 class Resource(models.Model):
     resourcename=models.CharField(max_length=255)
@@ -41,6 +40,7 @@ class Resource(models.Model):
 
     class Meta:
         db_table='resource'
+        verbose_name_plural='resources'
 
 class Event(models.Model):
     eventtitle=models.CharField(max_length=255)
@@ -52,6 +52,7 @@ class Event(models.Model):
 
     def __str__(self): 
         return self.eventtitle
+        
         class Meta:
             db_table='event'
-               
+            verbose_name_plural='events'   
