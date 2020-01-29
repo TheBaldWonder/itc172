@@ -22,7 +22,7 @@ class MeetingMinutes(models.Model):
     minutes=models.TextField()
 
     def __str__(self):
-        return self.attendance
+        return self.minutes
 
     class Meta:
         db_table='attendance'
@@ -48,6 +48,7 @@ class Event(models.Model):
     eventdate=models.DateTimeField(auto_now=False,auto_now_add=False)
     eventtime=models.DateTimeField(auto_now=False,auto_now_add=False)
     eventdescription=models.TextField(null=True, blank=True)
+    eventURL=models.URLField(null=True, blank=True)
     user=models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
     def __str__(self): 
