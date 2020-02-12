@@ -17,15 +17,7 @@ class Meeting(models.Model):
             db_table='meeting'
             verbose_name_plural='meetings'
 
-class MeetingMinutes(models.Model):
-    attendance=models.ManyToManyField(User)
-    minutes=models.TextField()
 
-    def __str__(self):
-        return self.minutes
-
-    class Meta:
-        db_table='attendance'
 
 class Resource(models.Model):
     resourcename=models.CharField(max_length=255)
