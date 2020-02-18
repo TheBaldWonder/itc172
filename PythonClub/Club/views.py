@@ -4,6 +4,7 @@ from django.http import HttpResponseNotModified
 from .forms import MeetingForm, ResourceForm, EventForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
+import datetime
 
 # Create your views here.
 def index (request):
@@ -12,11 +13,11 @@ def index (request):
 def meetings(request):
     meetings=Meeting.objects.all()
     return render(request, 'Club/meetings.html' , {'meetings': meetings})
-
+    
 def meetingdetail(request, id):
     meetingdetail=get_object_or_404(Meeting, pk=id)
-    return render(request, 'Club/meetingdetail.html', {'meetings' : meetings})
-    
+    return render(request, 'Club/meetingdetail.html', {'meeting' : meeting})
+
 def events(request):
     events_list=Event.objects.all()
     return render(request, 'Club/events.html', {'events_list': events_list})    
@@ -32,3 +33,42 @@ def resources(request):
 def resourcedetail(request, id):
     resource=get_object_or_404(Resource, pk=id)
     return render(request, 'Club/resourcedetail.html', {'resource' : resource})
+
+def newMeeting(request):
+    form=MeetingForm
+    if request.method=='POST':
+        form=MeetingForm(request.POST)
+        if form.is_valid():
+            post=form.save(commit=True)
+            post.save()
+            form=MeetingForm()
+
+    else:
+        form=MeetingForm()
+    return render(request, 'Club/newmeeting.html', {'form': form})
+
+def newResource(request):
+    form=ResourceForm
+    if request.method=='POST':
+        form=ResourceForm(request.POST)
+        if form.is_valid():
+            post=form.save(commit=True)
+            post.save()
+            form=ResourceForm()
+
+    else:
+        form=ResourceForm()
+    return render(request, 'Club/newresource.html', {'form': form})
+
+def newEvent(request):
+    form=EventForm
+    if request.method=='POST':
+        form=EventForm(request.POST)
+        if form.is_valid():
+            post=form.save(commit=True)
+            post.save()
+            form=EventForm()
+
+    else:
+        form=EventForm()
+    return render(request, 'Club/newevent.html', {'form': form})

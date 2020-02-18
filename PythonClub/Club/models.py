@@ -5,17 +5,18 @@ from django.contrib.auth.models import User
 
 class Meeting(models.Model):
     meetingtitle=models.CharField(max_length=255)
-    meetingdate=models.DateField(auto_now=False,auto_now_add=False)
-    meetingtime=models.TimeField(auto_now=False,auto_now_add=False)
+    meetingdate=models.DateField()
+    meetingtime=models.TimeField()
     location=models.TextField()
     agenda=models.TextField()
+    
 
     def __str__(self):
         return self.meetingtitle
 
         class Meta:
-            db_table='meeting'
-            verbose_name_plural='meetings'
+            db_table='Club_meeting'
+            verbose_name_plural='Club_meetings'
 
 
 
@@ -37,8 +38,8 @@ class Resource(models.Model):
 class Event(models.Model):
     eventtitle=models.CharField(max_length=255)
     eventlocation=models.TextField()
-    eventdate=models.DateTimeField(auto_now=False,auto_now_add=False)
-    eventtime=models.DateTimeField(auto_now=False,auto_now_add=False)
+    eventdate=models.DateField()
+    eventtime=models.TimeField()
     eventdescription=models.TextField(null=True, blank=True)
     eventURL=models.URLField(null=True, blank=True)
     user=models.ForeignKey(User, on_delete=models.DO_NOTHING)
@@ -47,5 +48,5 @@ class Event(models.Model):
         return self.eventtitle
         
         class Meta:
-            db_table='event'
+            db_table='Club_event'
             verbose_name_plural='events'   
