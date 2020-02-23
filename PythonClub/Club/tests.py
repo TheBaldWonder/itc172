@@ -29,30 +29,18 @@ class EventTest(TestCase):
 
     def test_tablename(self):
         self.assertEqual(str(Event._meta.db_table), 'Club_event')
+#Form Tests
 
 class MeetingFormTest(TestCase):
-    def setUp(self):
         
         def test_meetingFormValid(self):
-            form = MeetingForm(
-                data={
-                    'meetingtitle' : 'meeting1', 'meetingdate' : datetime.date(2019,5,30),
-                }
-            )
+            form=MeetingForm(data={'meetingtitle' : "meeting1", 'location' : "some type"})
             self.assertTrue(form.is_valid())
 
-        def test_meetingFormMinusDescript(self):
-            form = MeetingForm(
-                data= {
-                    'meetingtitle' : 'meeting1'
-                }
-            )
+        def test_meetingFormMinusTime(self):
+            form=MeetingForm(data= {'meetingtitle' : "meeting1"})
             self.assertFalse(form.is_valid())
 
         def test_meetingFormEmpty(self):
-            form = MeetingForm(
-                data= {
-                    'meetingtitle' : ''
-                }
-            )
+            form=MeetingForm(data= {'meetingtitle' : ""})
             self.assertFalse(form.is_valid())
