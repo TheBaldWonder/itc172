@@ -2,8 +2,8 @@ from django.test import TestCase
 from .models import Meeting, Event, Resource
 from django.urls import reverse
 from django.contrib.auth.models import User
-from datetime import datetime
-from .forms import MeetingForm
+import datetime
+from .forms import MeetingForm, EventForm, ResourceForm
 
 # Create your tests here
 class MeetingTest(TestCase):
@@ -31,16 +31,34 @@ class EventTest(TestCase):
         self.assertEqual(str(Event._meta.db_table), 'Club_event')
 #Form Tests
 
+class IndexTest(TestCase):
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+
+class GetMeetingsTest(TestCase):
+    def test_view_url_accessible_by_name(self):
+        response = self.client.get(reverse('meetings'))
+        self.assertEqual(response.status_code, 200)
+
 class MeetingFormTest(TestCase):
-        
-        def test_meetingFormValid(self):
-            form=MeetingForm(data={'meetingtitle' : "meeting1", 'location' : "some type"})
-            self.assertTrue(form.is_valid())
+    def setUp(self):
+        self.BigMike=User.objects.create(username='BigMike', password='BAa7pnJFd#Z2.$E')
 
-        def test_meetingFormMinusTime(self):
-            form=MeetingForm(data= {'meetingtitle' : "meeting1"})
-            self.assertFalse(form.is_valid())
+        def test_meetingForm(self):
+            form = MeetingForm(
+                data={
+                    'meetingtitle' : 'meeting1',
+                    'meetingdate' : datetime.date(2019,5,30),
+                }
+            )
+            self.assertTrue(form.is_valid)
 
-        def test_meetingFormEmpty(self):
-            form=MeetingForm(data= {'meetingtitle' : ""})
+        def test_meetingFormInvalid(self):
+            form = MeetingForm(
+                data= {
+                    'meetingtitle' : 'meeting1',
+                    'meetingdate' : datetime.date(2019,5,30),
+                }
+            )
             self.assertFalse(form.is_valid())
